@@ -1,13 +1,7 @@
 import React, { useState, useEffect } from "react";
 import StatusBar from "./StatusBar";
 
-const generateAdditionProblem = () => {
-  const newNum1 = Math.floor(Math.random() * 100); // Generate random number between 0 and 99
-  const newNum2 = Math.floor(Math.random() * 100);
-  return { num1: newNum1, num2: newNum2 };
-};
-
-const AdditionModule = () => {
+const SubtractionModule = () => {
   const [num1, setNum1] = useState(0);
   const [num2, setNum2] = useState(0);
   const [userAnswer, setUserAnswer] = useState("");
@@ -16,13 +10,20 @@ const AdditionModule = () => {
   const [correctAnswers, setCorrectAnswers] = useState(0);
 
   useEffect(() => {
-    const { num1: newNum1, num2: newNum2 } = generateAdditionProblem();
-    setNum1(newNum1);
-    setNum2(newNum2);
+    generateProblem();
   }, []);
 
+  const generateProblem = () => {
+    const newNum1 = Math.floor(Math.random() * 100); // Generate random number between 0 and 99
+    const newNum2 = Math.floor(Math.random() * 100);
+    // Ensure num1 is greater than or equal to num2 to avoid negative results
+    setNum1(newNum1);
+    setNum2(Math.min(newNum1, newNum2));
+    setUserAnswer("");
+  };
+
   const checkAnswer = () => {
-    const answer = num1 + num2;
+    const answer = num1 - num2;
     const userEnteredAnswer = parseInt(userAnswer, 10);
 
     if (userEnteredAnswer === answer) {
@@ -33,20 +34,16 @@ const AdditionModule = () => {
     }
 
     setTotalQuestions(totalQuestions + 1);
-
-    const { num1: newNum1, num2: newNum2 } = generateAdditionProblem();
-    setNum1(newNum1);
-    setNum2(newNum2);
-    setUserAnswer("");
+    generateProblem();
   };
 
   return (
     <div className="p-4 bg-purple-100 rounded-lg">
       <h1 className="text-2xl font-bold text-purple-800 mb-4">
-        Addition Module
+        Subtraction Module
       </h1>
       <p className="text-lg font-semibold text-purple-800">
-        Solve the addition problem: {num1} + {num2} =
+        Solve the subtraction problem: {num1} - {num2} =
       </p>
       <input
         className="p-2 mt-2 border-2 border-purple-300 rounded"
@@ -74,4 +71,4 @@ const AdditionModule = () => {
   );
 };
 
-export default AdditionModule;
+export default SubtractionModule;
