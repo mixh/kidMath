@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from "react";
 
+const StatusBar = ({ correctAnswers, totalQuestions }) => (
+  <div className="mt-4 p-4 bg-blue-100 rounded-lg">
+    <p className="text-lg font-semibold text-blue-800">
+      Correct: {correctAnswers} / {totalQuestions}
+    </p>
+  </div>
+);
+
 const AdditionModule = () => {
   const [num1, setNum1] = useState(0);
   const [num2, setNum2] = useState(0);
@@ -36,23 +44,35 @@ const AdditionModule = () => {
   };
 
   return (
-    <div>
-      <h1>Addition Module</h1>
-      <p>
+    <div className="p-4 bg-purple-100 rounded-lg">
+      <h1 className="text-2xl font-bold text-purple-800 mb-4">
+        Addition Module
+      </h1>
+      <p className="text-lg font-semibold text-purple-800">
         Solve the addition problem: {num1} + {num2} =
       </p>
       <input
+        className="p-2 mt-2 border-2 border-purple-300 rounded"
         type="number"
         value={userAnswer}
         onChange={(e) => setUserAnswer(e.target.value)}
       />
-      <button onClick={checkAnswer}>Check Answer</button>
+      <button
+        className="mt-2 px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700"
+        onClick={checkAnswer}
+      >
+        Check Answer
+      </button>
       {isCorrect !== null && (
-        <p>
+        <p className="mt-4 text-lg font-semibold text-purple-800">
           {isCorrect ? "Correct!" : "Wrong!"} Total correct: {correctAnswers}/
           {totalQuestions}
         </p>
       )}
+      <StatusBar
+        correctAnswers={correctAnswers}
+        totalQuestions={totalQuestions}
+      />
     </div>
   );
 };
