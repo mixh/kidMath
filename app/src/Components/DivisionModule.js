@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
-import StatusBar from "./StatusBar";
 
-const DivisionModule = () => {
+const DivisionModule = ({ updateProgress }) => {
   const [num1, setNum1] = useState(0);
   const [num2, setNum2] = useState(0);
   const [userAnswer, setUserAnswer] = useState("");
   const [isCorrect, setIsCorrect] = useState(null);
-  const [totalQuestions, setTotalQuestions] = useState(0);
-  const [correctAnswers, setCorrectAnswers] = useState(0);
+  const [localCorrectAnswers, setLocalCorrectAnswers] = useState(0);
+  const [localTotalQuestions, setLocalTotalQuestions] = useState(0);
 
   useEffect(() => {
     generateProblem();
@@ -26,20 +25,23 @@ const DivisionModule = () => {
     setNum1(newNum1);
     setNum2(newNum2);
     setUserAnswer("");
+    setIsCorrect(null);
   };
 
   const checkAnswer = () => {
     const answer = num1 / num2;
     const userEnteredAnswer = parseFloat(userAnswer);
 
-    if (userEnteredAnswer === answer) {
-      setIsCorrect(true);
-      setCorrectAnswers(correctAnswers + 1);
-    } else {
-      setIsCorrect(false);
+    const correct = userEnteredAnswer === answer;
+    setIsCorrect(correct);
+    updateProgress(correct);
+
+    // Update local module progress
+    setLocalTotalQuestions(localTotalQuestions + 1);
+    if (correct) {
+      setLocalCorrectAnswers(localCorrectAnswers + 1);
     }
 
-    setTotalQuestions(totalQuestions + 1);
     generateProblem();
   };
 
@@ -65,14 +67,13 @@ const DivisionModule = () => {
       </button>
       {isCorrect !== null && (
         <p className="mt-4 text-lg font-semibold text-purple-800">
-          {isCorrect ? "Correct!" : "Wrong!"} Total correct: {correctAnswers}/
-          {totalQuestions}
+          {isCorrect ? "Correct!" : "Wrong!"}
         </p>
       )}
-      <StatusBar
-        correctAnswers={correctAnswers}
-        totalQuestions={totalQuestions}
-      />
+      {/* Individual module progress */}
+      <p className="mt-2 text-lg font-semibold text-purple-800">
+        Module Progress: {localCorrectAnswers}/{localTotalQuestions}
+      </p>
     </div>
   );
 };
