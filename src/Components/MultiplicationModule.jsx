@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+/* eslint-disable react/prop-types */
+import { useState, useEffect } from "react";
 
 const MultiplicationModule = ({ updateProgress }) => {
   const [num1, setNum1] = useState(0);
@@ -13,15 +14,15 @@ const MultiplicationModule = ({ updateProgress }) => {
   }, []);
 
   const generateProblem = () => {
-    const newNum1 = Math.floor(Math.random() * 12); // Generate random number between 0 and 12 for multiplication tables
-    const newNum2 = Math.floor(Math.random() * 12);
+    const newNum1 = Math.floor(Math.random() * 25);
+    const newNum2 = Math.floor(Math.random() * 25);
     setNum1(newNum1);
     setNum2(newNum2);
     setUserAnswer("");
   };
 
   const checkAnswer = () => {
-    const answer = num1 / num2;
+    const answer = num1 * num2;
     const userEnteredAnswer = parseFloat(userAnswer);
 
     const correct = userEnteredAnswer === answer;

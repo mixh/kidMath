@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+/* eslint-disable react/prop-types */
+import { useState, useEffect } from "react";
 
-const SubtractionModule = ({ updateProgress }) => {
+const AdditionModule = ({ updateProgress }) => {
   const [num1, setNum1] = useState(0);
   const [num2, setNum2] = useState(0);
   const [userAnswer, setUserAnswer] = useState("");
@@ -10,20 +11,20 @@ const SubtractionModule = ({ updateProgress }) => {
 
   useEffect(() => {
     generateProblem();
-  }, []);
+  }, []); // Run this effect when the component mounts
 
   const generateProblem = () => {
-    const newNum1 = Math.floor(Math.random() * 1000); // Generate random number between 0 and 99
+    const newNum1 = Math.floor(Math.random() * 1000);
     const newNum2 = Math.floor(Math.random() * 1000);
-    // Ensure num1 is greater than or equal to num2 to avoid negative results
     setNum1(newNum1);
-    setNum2(Math.min(newNum1, newNum2));
+    setNum2(newNum2);
     setUserAnswer("");
+    setIsCorrect(null); // Reset correctness state for the new problem
   };
 
   const checkAnswer = () => {
-    const answer = num1 - num2;
-    const userEnteredAnswer = parseFloat(userAnswer);
+    const answer = num1 + num2;
+    const userEnteredAnswer = parseInt(userAnswer, 10);
 
     const correct = userEnteredAnswer === answer;
     setIsCorrect(correct);
@@ -41,10 +42,10 @@ const SubtractionModule = ({ updateProgress }) => {
   return (
     <div className="p-4 bg-purple-100 rounded-lg">
       <h1 className="text-2xl font-bold text-purple-800 mb-4">
-        Subtraction Module
+        Addition Module
       </h1>
       <p className="text-lg font-semibold text-purple-800">
-        Solve the subtraction problem: {num1} - {num2} =
+        Solve the addition problem: {num1} + {num2} =
       </p>
       <input
         className="p-2 mt-2 border-2 border-purple-300 rounded"
@@ -71,4 +72,4 @@ const SubtractionModule = ({ updateProgress }) => {
   );
 };
 
-export default SubtractionModule;
+export default AdditionModule;
