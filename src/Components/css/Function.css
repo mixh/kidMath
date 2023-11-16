@@ -1,0 +1,10 @@
+
+.image {
+    width: 10vh;
+    height: 10vh;
+}
+.image:hover {
+    width: 12vh;
+    height: 12vh;
+    rotate: 10deg;
+}
